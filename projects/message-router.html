@@ -1,0 +1,89 @@
+<!doctype html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Varun Hooda  | Personal Website</title>
+<meta name="description" content=""/>
+<meta name="author" content="varunhooda"/>
+<meta name="copyright" content=""/>
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/foundation.css"/>
+<link rel="stylesheet" href="css/portfolio-theme.css"/>
+<link rel="stylesheet" href="css/menu.css" />
+<link rel="stylesheet" href="css/flip.css" />
+<script src="js/vendor/modernizr.js"></script>
+</head>
+<body>
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+    <div class="logo"></div>
+    <section class="top-bar-section">
+      <ul class="center-buttons">
+        <li class="divider"></li>
+        <li><a href="index.html">Home</a></li>
+        <li class="divider"></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li class="divider"></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li class="divider"></li>
+        <li><a href="blogs.html">Blog</a></li>
+        <li class="divider"></li>
+        <li><a href="photos.html">Photos</a></li>
+        <li class="divider"></li>
+      </ul>
+    </section>
+  </nav>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <h1 style="text-align: center">Iceberg</h1>
+    </div>
+  </div>
+<div class="row project">
+<h3>Message Router</h3>
+<p>
+    Iceberg is a highly modular and fault tolerant message routing platform designed to meet high scalability and availability
+    requirement. This platform horizontally scales your application.
+     <a href="mo-receiver.html">See Example.</a> Iceberg is used to send messages from source to destination asynchronously
+</p>
+
+<h4>Technologies used</h4>
+<ul>
+    <li>Java</li>
+    <li>Spring</li>
+    <li>RabbitMQ</li>
+    <li>MySQL</li>
+</ul>
+<h4>Message Router Components</h4>
+
+<img src="img/router.jpg" alt="" />
+
+<h3>Router</h3>
+<p>
+    Router is a REST service which gives endpoint to send message. It contains routing logic
+    to route message among queues. This routing logic is configurable in <i>routing</i> table.
+</p>
+
+<h3>Processor</h3>
+<p>
+    Processor is a console application which connects to queue and dequeue messages.
+    It takes <i>service_id</i> in command line parameter, which is used to get connection data from
+    <i>connection</i> table. Using this connection data, processor dynamically connects to a queue.
+    Processor also has a <i>MessageHandler</i> interface.
+
+</p>
+</div>
+  <footer class="row">
+    <div class="large-12 columns">
+      <div class="row">
+        <div class="large-6 columns">  </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

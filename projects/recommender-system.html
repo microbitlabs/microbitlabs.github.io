@@ -1,0 +1,92 @@
+<!doctype html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Varun Hooda  | Personal Website</title>
+<meta name="description" content=""/>
+<meta name="author" content="varunhooda"/>
+<meta name="copyright" content=""/>
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/foundation.css"/>
+<link rel="stylesheet" href="css/portfolio-theme.css"/>
+<link rel="stylesheet" href="css/menu.css" />
+<link rel="stylesheet" href="css/flip.css" />
+<script src="js/vendor/modernizr.js"></script>
+</head>
+<body>
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+    <div class="logo"></div>
+    <section class="top-bar-section">
+      <ul class="center-buttons">
+        <li class="divider"></li>
+        <li><a href="index.html">Home</a></li>
+        <li class="divider"></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li class="divider"></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li class="divider"></li>
+        <li><a href="blogs.html">Blog</a></li>
+        <li class="divider"></li>
+        <li><a href="photos.html">Photos</a></li>
+        <li class="divider"></li>
+      </ul>
+    </section>
+  </nav>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <h1 style="text-align: center">Recommender System</h1>
+    </div>
+  </div>
+<div class="row project">
+<h3></h3>
+<p>
+
+It's a Collaborative filtering based recommender system built using Java. <a href="https://github.com/varunhooda/recommender-system" target="_blank">Source code available here</a>
+It is devided in following lossely coupled modules
+
+<ul>
+    <li><b>recommendation_api</b>  contains rest api to push events in system and get recommendation.</li>
+    <li><b>event_framework</b> contains Events and their Event handlers.</li>
+    <li><b>spring_rabbit</b> spring implementation of rabbitmq. It contains rabbitmq producer.</li>
+    <li><b>queue_worker</b> rabbitmq consumer which polls events from queue and save them in to database</li>
+    <li><b>recommendation_algo</b> contains recommendation algorithm implemenation and a multithreaded
+        batch job which runs algorithm on database and finds recommendation and save
+        them in different table.
+    </li>
+</ul>
+
+
+</p>
+
+<h4>Technology stack</h4>
+<ul>
+    <li>Java</li>
+    <li>Spring</li>
+    <li>RabbitMQ</li>
+</ul>
+
+
+<!-- <h3><strong><em>(and why your marketing team might not be ready for it)</em></strong></h3>
+<div class="intro-text">
+    <p>
+        Yhis is into text do you know it.nformation can tell us everything. It has all the answers. But they are answers to questions we have not asked, and which doubtless don’t even arise.
+- Jean Baudrillard, Cool Memories, Ch. 5, 1987.
+    </p>
+</div> -->
+</div>
+  <footer class="row">
+    <div class="large-12 columns">
+      <div class="row">
+        <div class="large-6 columns">  </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

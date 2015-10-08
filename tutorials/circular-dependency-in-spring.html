@@ -1,0 +1,137 @@
+<!doctype html>
+<html class="no-js" lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Circular Dependency in Spring</title>
+      <link rel="stylesheet" href="css/foundation.css" />
+      <link rel="stylesheet" href="lib/codemirror.css">
+      <link rel="stylesheet" href="lib/themes/neo.css"></script>
+      <link rel="stylesheet" href="css/portfolio-theme.css"/>
+      <link rel="stylesheet" href="css/menu.css" />
+      <link rel="stylesheet" href="css/cards.css" />
+
+      <script src="lib/codemirror.js"></script>
+
+      <script src="lib/clike.js"></script>
+      <script src="js/vendor/jquery.js"></script>
+      <script src="lib/xml.js"></script>
+   </head>
+   <body>
+
+
+       <nav class="top-bar" data-topbar>
+           <ul class="title-area">
+             <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+           </ul>
+           <div class="logo"></div>
+           <section class="top-bar-section">
+             <ul class="center-buttons">
+               <li class="divider"></li>
+               <li><a href="index.html">Home</a></li>
+               <li class="divider"></li>
+               <li><a href="projects.html">Projects</a></li>
+               <li class="divider"></li>
+               <li><a href="resume.html">Resume</a></li>
+               <li class="divider"></li>
+               <li><a href="blogs.html">Blog</a></li>
+               <li class="divider"></li>
+               <li><a href="photos.html">Photos</a></li>
+               <li class="divider"></li>
+             </ul>
+           </section>
+         </nav>
+
+
+           <div class="article-title article-card--pink">
+             <div class="gist">
+                <h1>Circular Dependency</h1>
+               <p>Written by <strong>Varun Hooda</strong> <span class="verified"></span></p>
+               <p></p>
+             </div>
+             <!-- Place this tag where you want the button to render. -->
+             <a class="github-button" href="https://github.com/varunhooda/spring-core/archive/master.zip"
+                data-style="mega" aria-label="Download ntkme/github-buttons on GitHub">Download</a>
+             <!-- Place this tag where you want the button to render. -->
+             <a class="github-button" href="https://github.com/varunhooda/spring-core/fork"
+                data-style="mega" data-count-href="/varunhooda/spring-core/network"
+                data-count-api="/repos/varunhooda/spring-core#forks_count"
+                data-count-aria-label="# forks on GitHub"
+                aria-label="Fork ntkme/github-buttons on GitHub">Fork</a>
+             <!-- Place this tag where you want the button to render. -->
+             <a class="github-button" href="https://github.com/varunhooda/spring-core"
+                data-style="mega" data-count-href="/varunhooda/spring-core/stargazers"
+                data-count-api="/repos/varunhooda/spring-core#stargazers_count"
+                data-count-aria-label="# stargazers on GitHub"
+                aria-label="Star varunhooda/spring-core on GitHub">Star</a>
+         </div>
+
+      <div class="row">
+         <div class="small-12 columns">
+
+            <article class="post">
+               <div class="content">
+                  <p>
+                    If two bean are depend on each other, then
+                    it is called circular dependency.
+                  </p>
+                  <h5 class="subheader">How to remove circular dependency.</h5>
+                  <ul>
+                      <li>Replace Constructor injection with Setter injection</li>
+                  </ul>
+
+                  <p>
+                      for example if we have following java classes which depend on each other. Then we simply replace
+                      constructor injection in one bean with setter injection as given in the example.
+                  </p>
+                  <div>
+<pre>
+    public class Creator {
+        private Builder builder;
+        public Creator(Builder builder) {
+            this.builder = builder;
+        }
+        public void sayHello() {
+            System.out.println("Hello !!!!");
+        }
+    }
+
+    public class Builder {
+        private Creator creator;
+        public void sayHello() {
+            System.out.println("Hello !!");
+        }
+        public void setCreator(Creator creator) {
+            this.creator = creator;
+        }
+    }
+</pre>
+                  </div>
+
+                 <h4>Spring bean configuration.</h4>
+<pre>
+    &lt;bean id=&quot;builder&quot; class=&quot;circular_dependency.Builder&quot;&gt;
+        &lt;property name=&quot;creator&quot; ref=&quot;creator&quot;/&gt;
+    &lt;/bean&gt;
+
+    &lt;bean id=&quot;creator&quot; class=&quot;circular_dependency.Creator&quot;&gt;
+        &lt;constructor-arg ref=&quot;builder&quot;/&gt;
+    &lt;/bean&gt;
+</pre>
+  </article>
+         </div>
+      </div>
+      <!-- Place this tag right after the last button or just before your close body tag. -->
+      <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+      <script>
+      $(document).ready(function(){
+        var preText = "";
+        $("pre").each(function (){
+          preText = $(this).text().trim();
+          $(this).text("");
+          var editor = CodeMirror(this, {value: preText, mode: "text/x-java", theme: "neo", readOnly: true, showCursorWhenSelecting: false, cursorHeight: 0,viewportMargin: 1});
+        });
+      });
+      </script>
+   </body>
+</html>

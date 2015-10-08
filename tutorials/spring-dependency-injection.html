@@ -1,0 +1,191 @@
+<!doctype html>
+<html class="no-js" lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Dependency Injection in Spring</title>
+      <link rel="stylesheet" href="css/foundation.css"/>
+      <link rel="stylesheet" href="css/portfolio-theme.css"/>
+      <link rel="stylesheet" href="css/menu.css" />
+      <link rel="stylesheet" href="css/flip.css" />
+      <link rel="stylesheet" href="css/cards.css" />
+      <script src="js/vendor/modernizr.js"></script>
+
+      <link rel="stylesheet" href="lib/codemirror.css">
+      <link rel="stylesheet" href="lib/themes/neo.css"></script>
+      <script src="lib/codemirror.js"></script>
+      <script src="js/vendor/jquery.js"></script>
+      <script src="lib/clike.js"></script>
+      <script src="lib/xml.js"></script>
+   </head>
+   <body>
+       <nav class="top-bar" data-topbar>
+         <ul class="title-area">
+           <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+         </ul>
+         <div class="logo"></div>
+         <section class="top-bar-section">
+           <ul class="center-buttons">
+             <li class="divider"></li>
+             <li><a href="index.html">Home</a></li>
+             <li class="divider"></li>
+             <li><a href="projects.html">Projects</a></li>
+             <li class="divider"></li>
+             <li><a href="resume.html">Resume</a></li>
+             <li class="divider"></li>
+             <li><a href="blogs.html">Blog</a></li>
+             <li class="divider"></li>
+             <li><a href="photos.html">Photos</a></li>
+             <li class="divider"></li>
+           </ul>
+         </section>
+       </nav>
+
+       <div class="article-title article-card--grey">
+           <div class="gist">
+              <h1>Spring Dependency Injection</h1>
+             <p>Written by <strong>Varun Hooda</strong> <span class="verified"></span></p>
+             <p>things you NEED to know about spring core!</p>
+           </div>
+           <!-- Place this tag where you want the button to render. -->
+           <a class="github-button" href="https://github.com/varunhooda/spring-core/archive/master.zip"
+              data-style="mega" aria-label="Download ntkme/github-buttons on GitHub">Download</a>
+           <!-- Place this tag where you want the button to render. -->
+           <a class="github-button" href="https://github.com/varunhooda/spring-core/fork"
+              data-style="mega" data-count-href="/varunhooda/spring-core/network"
+              data-count-api="/repos/varunhooda/spring-core#forks_count"
+              data-count-aria-label="# forks on GitHub"
+              aria-label="Fork ntkme/github-buttons on GitHub">Fork</a>
+           <!-- Place this tag where you want the button to render. -->
+           <a class="github-button" href="https://github.com/varunhooda/spring-core"
+              data-style="mega" data-count-href="/varunhooda/spring-core/stargazers"
+              data-count-api="/repos/varunhooda/spring-core#stargazers_count"
+              data-count-aria-label="# stargazers on GitHub"
+              aria-label="Star varunhooda/spring-core on GitHub">Star</a>
+       </div>
+      <div class="row">
+         <div class="small-12 columns">
+
+            <article class="post">
+               <div class="content">
+
+                  <h1> <small> Creating a bean and injecting dependencies</small></h1>
+
+                  <p>
+                     Objects that are managed by the Spring IoC container are called beans. we can configure a bean using  &lt;bean&gt; tag in XML.
+
+                  </p>
+                  <h5 class="subheader">There are two types of dependency injection.</h5>
+                  <ul>
+                      <li>Setter injection</li>
+                      <li>Constructor injection</li>
+                  </ul>
+
+                  <h3>Setter injection.</h3>
+                  <p>
+                      If we have following java class which depends on <i>Converter</i> class
+                  </p>
+                  <div>
+<pre>
+    public class StringConverter {
+        private String string;
+        private Integer acceptableLength;
+        private Converter converter;
+        public void setString(String string) {
+            this.string = string;
+        }
+        public void setAcceptableLength(Integer acceptableLength) {
+            this.acceptableLength = acceptableLength;
+        }
+        public void setConverter(Converter converter) {
+            this.converter = converter;
+        }
+    }
+</pre>
+                  </div>
+
+                <blockquote>
+                    In case of Setter-based dependency injection Class must have setter method for the property which we want to initialize or inject,
+                    otherwise we can not initialize that property using IOC container.
+                    You can also use @Required annotation on setter method to make that property mandatory but if you are using
+                    both Constructor-based dependency injection and Setter-based dependency injection(which is generally not a
+                    good idea to mix both in a bean) then you have to set property in bean no matter if you are in
+                    Constructor-based dependency injection.
+                </blockquote>
+                 <h4>Spring bean configuration.</h4>
+<pre>
+    &lt;bean id=&quot;upperCaseConverter&quot; class=&quot;spring_dependency_injection.UpperCaseConverter&quot;&gt;&lt;/bean&gt;
+
+    &lt;!-- setter injection--&gt;
+    &lt;bean id=&quot;stringConverter&quot; class=&quot;spring_dependency_injection.StringConverter&quot;&gt;
+        &lt;property name=&quot;acceptableLength&quot; value=&quot;30&quot; /&gt;
+        &lt;property name=&quot;string&quot; value=&quot;convert me to uppercase&quot; /&gt;
+        &lt;property name=&quot;converter&quot; ref=&quot;upperCaseConverter&quot; /&gt;
+    &lt;/bean&gt;
+</pre>
+
+<h3>Constructor Injection</h3>
+<p>
+    Here is the Java class to be used for Constructor injection
+</p>
+<pre>
+    public class StringConverter {
+        private String string;
+        private Integer acceptableLength;
+        private Converter converter;
+        public StringConverter() {
+        }
+        public StringConverter(String string, Integer acceptableLength, Converter converter) {
+            this.string = string;
+            this.acceptableLength = acceptableLength;
+            this.converter = converter;
+        }
+    }
+</pre>
+  <h5 class="subheader">There are three ways for constructor injection.</h5>
+  <ul>
+      <li>use the constructor parameter name for value disambiguation
+<pre>
+&lt;bean id=&quot;strConverterUsingConstructorType-1&quot; class=&quot;spring_dependency_injection.StringConverter&quot;&gt;
+    &lt;constructor-arg name=&quot;string&quot; value=&quot;Hello&quot;/&gt;
+    &lt;constructor-arg name=&quot;acceptableLength&quot; value=&quot;30&quot;/&gt;
+    &lt;constructor-arg ref=&quot;upperCaseConverter&quot;/&gt;
+&lt;/bean&gt;
+</pre>
+      </li>
+      <li>explicitly specify the type of the constructor argument using the type attribute
+<pre>
+&lt;bean id=&quot;strConverterUsingConstructorType-2&quot; class=&quot;spring_dependency_injection.StringConverter&quot;&gt;
+    &lt;constructor-arg type=&quot;spring_dependency_injection.Converter&quot; ref=&quot;upperCaseConverter&quot;/&gt;
+    &lt;constructor-arg type=&quot;java.lang.String&quot; value=&quot;Hello&quot;/&gt;
+    &lt;constructor-arg type=&quot;java.lang.Integer&quot; value=&quot;30&quot;/&gt;
+&lt;/bean&gt;
+</pre>
+      </li>
+      <li>Use the index attribute to specify explicitly the index of constructor arguments
+<pre>
+&lt;bean id=&quot;strConverterUsingConstructorType-3&quot; class=&quot;spring_dependency_injection.StringConverter&quot;&gt;
+    &lt;constructor-arg index=&quot;2&quot; ref=&quot;upperCaseConverter&quot;/&gt;
+    &lt;constructor-arg index=&quot;0&quot; value=&quot;Hello&quot;/&gt;
+    &lt;constructor-arg index=&quot;1&quot; value=&quot;30&quot;/&gt;
+&lt;/bean&gt;
+</pre>
+      </li>
+  </ul>
+            </article>
+         </div>
+      </div>
+      <!-- Place this tag right after the last button or just before your close body tag. -->
+      <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+      <script>
+      $(document).ready(function(){
+        var preText = "";
+        $("pre").each(function (){
+          preText = $(this).text().trim();
+          $(this).text("");
+          var editor = CodeMirror(this, {value: preText, mode: "text/x-java", theme: "neo", readOnly: true, showCursorWhenSelecting: false, cursorHeight: 0,viewportMargin: 1});
+        });
+      });
+      </script>
+   </body>
+</html>
